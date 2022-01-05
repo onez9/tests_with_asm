@@ -83,11 +83,20 @@ _start:	       ; сообщаем линкеру точку входа
 	mov edx, 3
 	int 0x80
 
+
+	L20:
 	mov eax, 4
 	mov ebx, 1
 	mov ecx, num4
 	mov edx, 3
+	jmp L20
+
+
 	int 0x80
+
+
+
+
 
   mov	eax,1    ; номер системного вызова (sys_exit)
   int	0x80     ; вызов ядра
