@@ -15,6 +15,7 @@ segment .bss
 	num1 resb 3
 	num2 resb 3
 	num3 resb 3
+	num4 resb 3
 
 
 section	.text
@@ -63,7 +64,7 @@ _start:	       ; сообщаем линкеру точку входа
 	mov edx, len
 	int 0x80
 
-	mov ax, '8'
+	mov ax, '9'
 	sub ax, '0'
 
 	mov bl, '2'
@@ -71,9 +72,10 @@ _start:	       ; сообщаем линкеру точку входа
 
 	div bl
 
-	add ax, '0'
-	mov [num3], ax
-
+	add al, '0'
+	mov [num3], al
+	add ah, '0'
+	mov [num4], ah
 
 	mov eax, 4
 	mov ebx, 1
@@ -81,6 +83,11 @@ _start:	       ; сообщаем линкеру точку входа
 	mov edx, 3
 	int 0x80
 
+	mov eax, 4
+	mov ebx, 1
+	mov ecx, num4
+	mov edx, 3
+	int 0x80
 
   mov	eax,1    ; номер системного вызова (sys_exit)
   int	0x80     ; вызов ядра
