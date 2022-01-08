@@ -1,6 +1,6 @@
 
 section	.data
-	msg db 'Аниме это хорошо',0xa ; наше сообщение
+	msg db 0xa, '----------', 0xa ; наше сообщение
 	len equ $- msg  ; длина нашего сообщения 
 	;m2 times 9 dw 0
 	;n1 db '1'
@@ -10,12 +10,16 @@ section	.data
 	count dw 0
 	msg2 db 'Type value: ', 0xa
 	len2 equ $- msg2
+	;my_table times 10 dw 0
+	;Direct (direct) addressing
+	my_table db 1, 2, 3, 4, 5, 6, 7, 8, 9
 
 segment .bss
 	num1 resb 3
 	num2 resb 3
 	num3 resb 3
 	num4 resb 3
+	num5 resb 3
 
 
 section	.text
@@ -37,14 +41,14 @@ _start:	       ; сообщаем линкеру точку входа
 	add eax, ebx
 	add eax, '0' ; добавляем '0' для конвертации суммы из десятичной системы в ASCII
 
-	mov [num1], eax ; сохраняем сумму в ячейке памяти res
+	mov [num1], eax ; сохраняем сумму в ячейке памяти num1
 
 
-	mov eax, 4; номер системного вызова (sys_write)
-	mov ebx, 1 ; файловый дескриптор (stdout)
-	mov ecx, num1
-	mov edx, 5
-	int 0x80
+	;mov eax, 4; номер системного вызова (sys_write)
+	;mov ebx, 1 ; файловый дескриптор (stdout)
+	;mov ecx, num1
+	;mov edx, 5
+	;int 0x80
 
 	mov eax, 4
 	mov ebx, 1
@@ -83,20 +87,42 @@ _start:	       ; сообщаем линкеру точку входа
 	mov edx, 3
 	int 0x80
 
-
-	L20:
 	mov eax, 4
 	mov ebx, 1
 	mov ecx, num4
 	mov edx, 3
-	jmp L20
-
-
 	int 0x80
 
+	;mov al, 100
+	;;; loop
+	;L20:
+	;int 0x80
+	;loop L20
 
+	;loop L20
+	;jmp L20
 
+	; Этот режим адресации использует арифметические операторы для изменения адреса. 
+	; Например, следующие определения определяют таблицы данных:
+	;
+	; BYTE_TABLE DB  14, 15, 22, 45      ; таблица байтов
+	; WORD_TABLE DW  134, 345, 564, 123  ; таблица слов
 
+	mov eax, 4
+	mov ebx, 1
+	mov ecx, msg
+	mov edx, len
+	int 0x80
+
+	mov al, [my_table+5]
+	add al, '0'
+	mov [num5], al
+
+	mov eax, 4
+	mov ebx, 1
+	mov ecx, num5
+	mov edx, 3
+	int 0x80
 
   mov	eax,1    ; номер системного вызова (sys_exit)
   int	0x80     ; вызов ядра
