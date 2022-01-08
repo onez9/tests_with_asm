@@ -1,8 +1,10 @@
-/*.o
-/*.obj
-/*build*
-/*.c
-/*.txt
-/*.i
-/*.s
+nasm/sample2/**
+nasm/sample3/**
+*.o
+*.obj
+*build*
+*.c
+*.txt
+*.i
+*.s
 
