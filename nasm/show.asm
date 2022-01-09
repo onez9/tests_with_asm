@@ -92,7 +92,8 @@ _start:									; сообщаем линкеру входную точку
 	; if 5==0 -> 1, 2 else -> 2
 	CMP DX,	0  ; сравниваем значение регистра DX с нулем dx == 5 !!!!!!!!!!!!!!!!!1
 	JE  L7      ; если true, то переходим к метке L7 ; if result==0 -> ZF=1(true) else if dx==samonakereba then ZF=0(false)
-	write_string msg6, len6 ; if true then ignore
+	; if true then ignore ele jump with L7
+	write_string msg6, len6 
 	L7:
 	write_string  msg5, len5
 
