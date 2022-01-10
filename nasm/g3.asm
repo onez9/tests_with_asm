@@ -50,7 +50,9 @@ main:	                ;tell linker entry point
 	push rax
 	lea rdi, [string]
 	mov rsi, rax
-	xor rax, rax
+	;xor rax, rax
+	mov rax, 1
+	
 	call printf
 
 	pop rax
