@@ -27,11 +27,12 @@ section .data
 
 	msg6 db 'I love anime!. true'
 	len6 equ $ - msg6
+	;nunb db 7
 
 section .bss
 	n1 resb 3
 	n2 resb 3
-	num resb 13
+	num resb 1
 	remainder resb 13
 
 section	.text
@@ -39,10 +40,10 @@ section	.text
 
 	
 _start:									; сообщаем линкеру входную точку
-	; write_string msg1, len1
-	; write_string msg2, len2
-	; write_string msg3, len3
-	; invoce
+	;write_string msg1, len1
+	;write_string msg2, len2
+	;write_string msg3, len3
+	;invoce
 
 	;mov ax,'9'
 	;sub ax,'0' ; convert string to number
@@ -87,43 +88,54 @@ _start:									; сообщаем линкеру входную точку
 	;write_string num, 3
 
 	; In the following example fire both instruction, becose jumpt not happening
-	mov dx, 5
+	mov dx, 4
 
 	; if 5==0 -> 1, 2 else -> 2
-	CMP DX,	0  ; сравниваем значение регистра DX с нулем dx == 5 !!!!!!!!!!!!!!!!!1
-	JE  L7      ; если true, то переходим к метке L7 ; if result==0 -> ZF=1(true) else if dx==samonakereba then ZF=0(false)
+	CMP DX,	5  ; сравниваем значение регистра DX с нулем dx == 5 !!!!!!!!!!!!!!!!!1
+	JAE  L7      ; если true, то переходим к метке L7 ; if result==0 -> ZF=1(true) else if dx==samonakereba then ZF=0(false)
 	; if true then ignore ele jump with L7
 	write_string msg6, len6 
 	L7:
 	write_string  msg5, len5
 
 
+	
+	mov al, 10
+	mov [num], al
+	l1:
+	write_string msg6, len6
+
+	dec [num] 
+	loop l1
+	;L1:
+	;write_string msg6, len6
+	;jmp L1
 
 
 	;write_string msg4, len4
   ;call display
   mov	 eax,1							; номер системного вызова (sys_exit)
   int	 0x80	        		; вызов ядра
-
-	
-display:
-	;write_string msg3, len3
-  mov  ecx, 256
-	;mov  rax, 1
-	
-next:
-	;call display
-  push ecx
-  mov  eax, 4
-  mov  ebx, 1
-  mov  ecx, achar
-  mov  edx, 1
-  int  80h
-  
-  pop  ecx	
-  mov	 dx,  [achar]
-  cmp	 byte [achar], 0dh
-  inc	 byte [achar]
-  loop next
-  ret
-	
+;
+;	
+;display:
+;	;write_string msg3, len3
+;  mov  ecx, 256
+;	;mov  rax, 1
+;	
+;next:
+;	;call display
+;  push ecx
+;  mov  eax, 4
+;  mov  ebx, 1
+;  mov  ecx, achar
+;  mov  edx, 1
+;  int  80h
+;  
+;  pop  ecx	
+;  mov	 dx,  [achar]
+;  cmp	 byte [achar], 0dh
+;  inc	 byte [achar]
+;  loop next
+;  ret
+;	
