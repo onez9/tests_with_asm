@@ -32,14 +32,14 @@ print_string:
 
 length_string:
 	push rdx
-	xor drx, rdx
+	xor rdx, rdx
 	.nex_iter:
 		cmp [rax+rdx], byte 0
 		je .close
 		inc rdx
 		jmp .nex_iter
 
-	.close
+	.close:
 		mov rax, rdx
 		pop rdx
 		ret
