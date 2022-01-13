@@ -1,5 +1,4 @@
 %macro www 2
-
 	mov rax, 4
 	mov rbx, 1
 	mov rcx, %1
@@ -7,12 +6,9 @@
 	int 80h
 %endmacro
 
-
-
 section	.data
 	msg db 'The Sum is:',0xa	
 	len equ $ - msg			
-
 	num1 db '12345'
 	num2 db '23456'
 	sum db '     '

@@ -1,15 +1,20 @@
 CFLAGS= -f elf32
 LFLAGS= -m elf_i386
 
-all: calc
+p=$1
 
-calc: calc.o
-	ld $(LFLAGS) calc.o -o calc
+all: $(p)
 
-calc.o: calc.asm
-	nasm $(CFLAGS) calc.asm -o calc.o
+calc: $(p).o
+	ld $(LFLAGS) $(p).o -o calc
+
+calc.o: $(p).asm
+	nasm $(CFLAGS) $(p).asm -o $(p).o
 
 clean:
-	rm -f calc.o calc
+	rm -f $(p).o $(p)
         
-.INTERMEDIATE: calc.o
+.INTERMEDIATE: $(p).o
+
+
+

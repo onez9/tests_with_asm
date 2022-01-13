@@ -42,21 +42,20 @@ main:	                ;tell linker entry point
 	;push string
 	;pop rbx
 	;add rbx, '0'
-	
-	
-
 
 	loo:
+
 	push rax
 	lea rdi, [string]
 	mov rsi, rax
 	;xor rax, rax
-	mov rax, 1
+	mov rax, 0 ; restart sys call
 	
 	call printf
 
 	pop rax
 	dec rax
+
 	jnz loo
 
 	;lea rdi, [fmt]
