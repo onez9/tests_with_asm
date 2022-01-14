@@ -18,22 +18,15 @@ section anime
 
 section	.data
 	;msg db 'The Sum is:',0xa	
-	msg db 'hello world ', 0xa, 0x0
+	msg db '324123', 0
 	len equ $ - msg			
-
-	fmt     db      "Comparison = %s", 0xa, 0x0
-	;str1    db      "Hello", 0x0
-	;str2    db      "Hellx", 0x0
-
-	;num1 db '12345'
-	;num2 db '23456'
-	;sum db '     '
 
 section .bss
 	ss1 resb 4
 	;ss2 rb 4 not work only fast !!!!!!!!!!!!!
 	ss2 resb 2
 	res resb 4
+
 section	.text
 	extern printf, strcmp
 	global _start
@@ -44,33 +37,52 @@ _start:	                ;tell linker entry point
 	;mov eax, 3
 	;mov ebx, 1
 	;mov ecx, 
-	mov eax, 213213
 
-	;mul dword 3
-
-	
+	mov eax, msg ;; into eax a msg
+	call string2number ;; into eax a number
 
 
-	pusha
-	;push byte 'd'
-	;push byte '2'
-	;push byte 'c'
-
-	call func
-
-	popa
-
-	call print_number
+	call print_number ;; print number
 	call exit
 
-func:
-	;push
+string2number:
 
-	add ebp, 12
-	lea eax, [esi+3]
+	push ebx
+	push ecx
+	push edx
+
+	xor ebx, ebx
+	xor ecx, ecx
+
+	.next_iter:
+		cmp [eax+ebx], byte 0
+		je .next_step
+
+		mov cl, [eax+ebx]
+		sub cl, '0'
+		push ecx
+		inc ebx
+		jmp .next_iter
+	.next_step:
+		mov ecx, 1
+		xor eax, eax
+	.to_number:
+		cmp ebx, 0
+		je .close
+		pop edx
+		imul edx, ecx
+		imul ecx, 10
+		add eax, edx
+		dec ebx
+		jmp .to_number
+	.close:
+		pop edx
+		pop ecx
+		pop ebx
+
+		ret
 
 
-	ret
 
 print_number:
 	push eax
