@@ -33,7 +33,7 @@ section	.text
   ;global main					;must be declared for using gcc
 
 _start:	                ;tell linker entry point
-
+))
 	;mov eax, 3
 	;mov ebx, 1
 	;mov ecx, 

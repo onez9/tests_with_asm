@@ -12,11 +12,15 @@
 
 
 
+
 section	.data
 	;msg db 'The Sum is:',0xa	
-	msg db 'Hello world', 0
+	msg db 'Hello world bitch'
 	len equ $ - msg			
+
+	filename db 'file.txt'
 	_buffer.size equ 20
+
 
 section .bss
 	ss1 resb 4
@@ -35,6 +39,29 @@ section	.text
 
 _start:	                ;tell linker entry point
 	;mov eax, msg ;; into eax a msg
+	;mov eax, 8
+	;mov ebx, filename
+	;mov ecx, 0777
+	;int 0x80
+
+
+	;mov [r], eax
+	;;add [r], byte '0'
+	;;print r, 1
+
+
+	;mov eax, 4
+	;mov ebx, [r]
+	;mov ecx, msg
+	;mov edx, len
+	;int 0x80
+
+	;mov eax, 6
+	;mov ebx, [r]
+	;int 0x80
+
+    
+	
 	;mov eax, 573432981
 	;mov ebx, _buffer
 	;mov ecx, _buffer.size
@@ -55,24 +82,203 @@ _start:	                ;tell linker entry point
 	;mov edx, 1
 	;int 0x80
 
-	xor dl, dl
-	l1:
-	mov al, [msg+edx]
-	cmp al, byte 0 
-	je l2
-	mov [r], eax
-	pusha 
-	print r, 1
-	popa 
-	mov [r], byte 0xa
-	pusha
-	print r, 1
-	popa
-	inc dl
-	jmp l1
-	l2:
+	;mov eax, 6
+	;mov ebx, _buffer
+	;mov ecx, _buffer.size
+	;call number2string
+
+	;print _buffer, _buffer.size
+	
+
+	;mov eax, 12
+	;add eax, 34
+	;mov ebx, 23
+	;imul eax, ebx
+	;div ebx
+	;mov eax, [al]
+	;add [ss1], eax
+	;add [ss1], byte '0'
+	;print ss1, 4
+
+
+
+
+	;call number2string
+	;print _buffer, _buffer.size
+
+
+
+
+
+
+	
+
+
+	;xor dl, dl
+	;xor edx, edx 
+
+	;l1:
+	;mov eax, [msg+edx]
+	;cmp eax, byte 0 
+	;je l2
+	;mov [r], eax
+	;pusha 
+	;print r, 1
+	;popa 
+
+	;;mov [r], byte 0xa
+	;;pusha
+	;;print r, 1
+	;;popa
+	mov eax, 10 
+	mov ebx, 45
+	call gcd
+	;call factorial
+	;call fibonacci
+	call print_number
+	;mov ebx, _buffer
+	;mov ecx, _buffer.size
+	;call number2string
+	;
+	;print _buffer, _buffer.size
+	;mov eax, '0'
+	;mov [ss1], eax
+	;print ss1, 4
+
+
+
+	;inc edx
+	;jmp l1
+	;l2:
 	call exit
 
+section .factorial
+; rax = input
+; output 
+; rax = output
+factorial:
+	push ebx
+	mov ebx, eax
+	mov eax, 1
+	.next_iter:
+		cmp ebx, 1
+		jle .close
+		mul ebx
+		dec ebx
+		jmp .next_iter
+	.close:
+		pop ebx
+		ret
+
+section .fibonacci
+fibonacci:
+; input
+; rax = number
+; output 
+; rax = number
+	push ebx
+	push ecx
+
+	mov ecx, eax
+	mov eax, 0
+	mov ebx, 1
+	cmp ecx, 0
+	je .next_step
+	
+	.next_iter:
+		cmp ecx, 1
+		jle .close
+
+		push ebx     ; save into stack first value ebx
+		add eax, ebx ; save summu amounts first two number into eax
+		mov ebx, eax ; save eax into ebx
+
+		pop eax      ; save ebx into eax
+		dec ecx
+		jmp .next_iter
+	.next_step:
+		xor ebx, ebx
+
+	.close:
+		mov eax, ebx
+		pop ecx
+		pop ebx
+		ret
+		
+
+; gcd(a, 0)
+; gcd(a, b) = gcd(b, a mod b)
+section .gcd
+gcd:
+	; input
+	; eax = number1
+	; ebx = number2
+	; output
+	; eax = number
+	push ebx
+	.next_iter:
+		cmp ebx, 0
+		je .close
+
+		xor edx, edx ; ecx <=== null
+		div ebx ; after div result writed into edx
+
+		push ebx
+		mov ebx, edx ; write balance
+		pop eax ; write ebx into eax
+
+		jmp .next_iter
+
+	.close:
+		pop ebx
+		ret
+
+section .print_number
+print_number:
+	push eax
+	push ebx
+	push ecx
+	push edx
+
+	; amount iterations that happens into first loop 
+	xor ecx, ecx
+
+	.next_iter:
+		mov ebx, 10 ; mov ebx 10
+		xor edx, edx ; mov null edx
+		div ebx ; div on ebx eax
+		add edx, '0' ; convert to asci
+		push edx ; res push into stack
+		inc ecx ; ecx++ 
+
+		cmp eax, 0
+		je .print_iter ; if eax == 0
+
+		jmp .next_iter
+	.print_iter:
+		;print msg, len
+
+		cmp ecx, 0
+		je .close
+
+		pop eax
+		mov [ss1], eax
+		push ecx ; that no erace increments
+		print ss1, 4
+		pop ecx ; that no erace increments
+		dec ecx
+		jmp .print_iter
+		
+	.close:
+		mov [ss2], byte 0xa 
+		print ss2, 2
+
+		;print byte '\n', 1
+		pop edx
+		pop ecx
+		pop ebx
+		pop eax
+		ret
 
 
 
