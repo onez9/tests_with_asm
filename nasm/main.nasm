@@ -10,11 +10,18 @@
 	popa
 %endmacro
 
-extern exit
-extern print_number
-extern gcd
-extern fibonacci
-extern factorial
+;extern exit
+;extern print_number
+;extern gcd
+;extern fibonacci
+;extern factorial
+
+%include "asmlib/fmt.inc"
+%include "asmlib/sys.inc"
+%include "asmlib/str.inc"
+%include "asmlib/mth.inc"
+
+
 
 section	.data
 	;msg db 'The Sum is:',0xa	
@@ -41,8 +48,8 @@ section	.text
   ;global main					;must be declared for using gcc
 
 _start:	                ;tell linker entry point
-	mov eax, 10 
-	mov ebx, 45
+	mov eax, 11 
+	mov ebx, 44
 	call gcd
 	;call factorial
 	;call fibonacci

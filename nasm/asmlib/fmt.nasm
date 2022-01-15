@@ -1,5 +1,5 @@
 global print_number
-global print
+;global print
 
 
 section .bss
