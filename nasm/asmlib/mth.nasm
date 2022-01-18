@@ -11,6 +11,7 @@ section .factorial
 ; output 
 ; rax = output
 factorial:
+	push edx
 	push ebx
 	mov ebx, eax
 	mov eax, 1
@@ -22,6 +23,7 @@ factorial:
 		jmp .next_iter
 	.close:
 		pop ebx
+		pop edx
 		ret
 
 section .fibonacci

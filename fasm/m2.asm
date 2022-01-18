@@ -1,11 +1,10 @@
-format ELF64
-public _start
+format ELF64 executable
+entry _start
 
+;public _start
 
-
-section '.data' writable
 new_line equ 0xa
-msg db "hello, world", new_line, 0
+msg db "hello, world!", new_line, 0
 len equ $ - msg
 
 _start:

@@ -1,0 +1,5 @@
+CC = fasm 
+
+once: main.asm
+	$(CC) main.asm
+	ld main.o $(lib)
