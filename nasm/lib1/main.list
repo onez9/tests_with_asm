@@ -1,0 +1,78 @@
+     1                                  ; When set, it instructed the operating system to retain the text 
+     2                                  ; segment of the program in swap space after the process exited. 
+     3                                  ; This speeds up subsequent executions by allowing the kernel 
+     4                                  ; to make a single operation of moving the program from swap to real memory. 
+     5                                  ; Thus, frequently-used programs like editors would load noticeably faster.
+     6                                  
+     7                                  section .bss
+     8 00000000 ????????                	fd_out resb 4
+     9                                  
+    10                                  
+    11                                  section .data
+    12 00000000 696E7075742E747874-     	namefale db 'input.txt', 0
+    12 00000009 00                 
+    13 0000000A 48656C6C6F20776F72-     	msg db 'Hello world', 0xa
+    13 00000013 6C640A             
+    14                                  	len equ $ - msg
+    15                                  	extern putchar
+    16                                  
+    17                                  
+    18                                  section .text
+    19                                  	global _start
+    20                                  
+    21                                  _start:
+    22                                  	;##################################################################
+    23                                  	;mov rax, 4
+    24                                  	;mov rbx, 1
+    25                                  	;mov rcx, msg
+    26                                  	;mov rdx, len
+    27                                  	;int 0x80
+    28                                  	;syscall ; not work
+    29                                  	;int 0x80 ; work
+    30                                  	;##################################################################
+    31 00000000 B804000000              	mov eax, 4
+    32 00000005 BB01000000              	mov ebx, 1
+    33 0000000A B9[0A000000]            	mov ecx, msg
+    34 0000000F BA0C000000              	mov edx, len
+    35 00000014 CD80                    	int 0x80
+    36                                  
+    37                                  	;##################################################################
+    38                                    ;mov rdi, namefale
+    39                                    ;mov rsi, 0x40 ;0102     ;O_CREAT, man open
+    40                                    ;mov rdx, 0666o     ;umode_t
+    41                                    ;mov rax, 2
+    42                                    ;syscall ; work
+    43                                    ;int 0x80 ; not work
+    44                                  	;##################################################################
+    45                                  
+    46                                  	;##################################################################
+    47                                  	;mov rax, 8
+    48                                  	;mov rbx, namefale
+    49                                  	;mov rcx, 0777o
+    50                                  	;syscall
+    51                                  	;int 0x80 ; wordk
+    52                                    ;syscall
+    53                                  
+    54                                  
+    55                                  
+    56                                  
+    57                                  	
+    58                                  	;mov rdi,'H' ; function parameter: one char to print
+    59                                  
+    60                                  
+    61 00000016 E800000000              	call exit
+    62                                  
+    63                                  exit:
+    64                                  	;mov rax, 60
+    65                                  	;syscall
+    66 0000001B 31C0                    	xor eax, eax
+    67 0000001D 40                      	inc eax
+    68 0000001E BB00000000              	mov ebx, 0
+    69 00000023 CD80                    	int 0x80
+    70                                  
+    71                                  
+    72                                  
+    73                                  
+    74                                  
+    75                                  
+    76                                  
