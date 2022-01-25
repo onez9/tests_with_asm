@@ -109,13 +109,7 @@ _start:
 	;syscall
 	;int 0x80 ; wordk
   ;syscall
-
-
-
-
-	
 	;mov rdi,'H' ; function parameter: one char to print
-
 
 	call exit
 

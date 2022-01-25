@@ -20,7 +20,8 @@
 %include "asmlib/sys.inc"
 %include "asmlib/str.inc"
 %include "asmlib/mth.inc"
-
+;import 
+;export
 
 
 section	.data
@@ -47,7 +48,6 @@ section .bss
 	_bss_char resb 1
 
 section	.text
-	;extern printf, strcmp
 	global _start
   ;global main					;must be declared for using gcc
 
@@ -55,14 +55,7 @@ _start:	                ;tell linker entry point
 
 	push msg
 	mov eax, fmt
-	;mov [ss1], eax
-	;mov eax, ss1
 	call printf
-	;call print_char
-	;call gcd
-	;call factorial
-	;call fibonacci
-	;call print_number
 	call exit
 
 
@@ -81,18 +74,20 @@ section .printf
 
 printf:
 	.next_iter:
-		;print msg, len
 		cmp [eax], byte 0
 		je .close
+
 		cmp [eax], byte '%'
 		je .special_char
+
 		.special_char:
 			jmp .next_step
+
 		.default_char:
 			push eax
 			mov eax, [eax]
+
 			print msg, len
-			;call print_char
 			pop eax
 			jmp .next_step
 		.next_step:
@@ -103,10 +98,10 @@ printf:
 
 section .print_char
 print_char:
-	;pusha
 	push ebx
 	push ecx
 	push edx
+
 	
 	mov [ss1], eax
 	mov eax, 4

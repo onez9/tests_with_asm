@@ -19,11 +19,15 @@ size_t* Sort(size_t*, size_t, size_t);
 int main() {
 	using namespace std;
 	size_t arr[] = {5,2,4,6,1,3,2,6};
+
 	size_t lengtharr = sizeof(arr) / sizeof(arr[0]);
+
 	cout << lengtharr << endl;
+
 	Sort(arr, 1, lengtharr);
 	
 	return 0;
+
 }
 
 
@@ -54,9 +58,6 @@ size_t* Sort(size_t* A, size_t p, size_t r) {
 
 
 }
-
-
-
 
 
 

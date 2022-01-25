@@ -110,12 +110,10 @@ _start:									; сообщаем линкеру входную точку
 	;L1:
 	;write_string msg6, len6
 	;jmp L1
-
-
 	;write_string msg4, len4
   ;call display
-  mov	 eax,1							; номер системного вызова (sys_exit)
-  int	 0x80	        		; вызов ядра
+  mov eax,1							; номер системного вызова (sys_exit)
+  int 0x80	        		; вызов ядра
 ;
 ;	
 ;display:

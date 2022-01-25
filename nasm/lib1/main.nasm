@@ -1,46 +1,67 @@
+%macro p2 2
+
+
+%endmacro 
+
+%strlen che "hello world"
+
 section .data
 	msg db "hello anime anime", 0
 	len equ $ - msg
-	;m db 0xa
+	v1 dd 1.1, 2.2, 3.3, 4.4
+	align 32
 
 section .bss
+	ms1 resb 1
 
 section .text
 	global _start
 
+
 _start:
-	mov ecx, len
+	;mov rax, 1
+
+	movss xmm0, [v1]
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	mov rcx, len
+	mov [ms1], byte 0xa
 
 	s1:
-	push ecx
-	mov esi, 0
-
+	push rcx
+	mov rsi, 0
 	s2:
-	push ecx
+	push rcx
+	mov rax, 4
+	mov rbx, 1
+	lea rcx, [msg+rcx]
+	mov rdx, 1
+	int 0x80
+	pop rcx
+	inc rsi
+	cmp rsi, 10
+	jle s2
+
 
 	mov eax, 4
 	mov ebx, 1
-	lea ecx, [msg+ecx]
+	mov ecx, ms1
 	mov edx, 1
 	int 0x80
 
-	pop ecx
-	inc esi
-	cmp esi, 3
-	jle s2
+	pop rcx
+	dec rcx
 
-	pop ecx
-
-	dec ecx
-
-
-
-	cmp ecx, byte 0
+	cmp rcx, byte 0
 	jge s1
-
 	call exit
 
+
 exit:
-	mov eax, 1
-	mov ebx, 0 
+	mov rax, 1
+	mov rbx, 0 
 	int 0x80
