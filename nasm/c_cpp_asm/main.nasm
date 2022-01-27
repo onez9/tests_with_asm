@@ -47,22 +47,15 @@ segment .text
 	global _start
 
 _start:
-
-
 	;push '8'
 	push qword 'wor3'
 
 	mov rax, 4234
 	call print_number
 	call print_number
+	call func
 
-	;call func
 	call exit
-	;call exit
-	;mov rax, 60
-	;xor rdi, rdi
-	;syscall
-
 
 
 ; +8
