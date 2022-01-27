@@ -25,6 +25,10 @@
 
 extern exit
 extern print_number
+extern fibonacci
+extern factorial
+extern string2number
+extern number2string
 
 global msg
 global len
@@ -47,52 +51,79 @@ segment .text
 	global _start
 
 _start:
-	;push '8'
-	push qword 'wor3'
 
-	mov rax, 4234
+	mov rax, 6
+	;call fac1
+	call fac1
 	call print_number
-	call print_number
-	call func
-
 	call exit
 
 
 ; +8
+fac2:
+	mov rbx, rax
+	.next_iter:
+		dec rbx
+		mul rbx
+		;call print_number
+		cmp rbx, 1
+		je .qu
+	jmp .next_iter
+
+	.qu:
+		ret
+fac1:
+	;enter
+	push rbp
+	mov rbp, rsp
+
+	push rax
+	cmp rax, 1
+	je .qu
+
+	dec rax
+	call fac1
+
+
+
+	.qu:
+		pop rbx
+		mul rbx
+		call print_number
+		
+
+		mov rsp, rbp
+		pop rbp
+		;leave
+		ret
+
 func:
 	push rbp
 	mov rbp, rsp
 
 	push '6'
-	mov rax, "h3243lee"
-	push rax
-
-	mov rax, 1
-	mov rdi, 1
-	lea rsi, [rsp] ; show 6
-	mov rdx, 8
-	syscall
+	push '123'
+	push '12s3'
 	printchar msg, len
 
-	mov rcx, 200
+	mov rcx, 6 ; 6 - a external operand 
 	l1:
 
 	mov rbx, rcx
-
 	mov rax, 1
 	mov rdi, 1
-	lea rsi, [rbx]
+	;lea rsi, [rsp+8*(rcx-1)]
+	lea rsi, [rbp+30]
 	mov rdx, 8
-
 
 	push rcx
 	syscall
-	;printchar msg, len
+	printchar msg, len
 	pop rcx
 	loop l1
 
 	
-	add rsp, 16
+	add rsp, 24
 	pop rbp
 	ret
 
