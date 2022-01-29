@@ -13,10 +13,25 @@ build: main.nasm $(LIBS_OBJ)
 	nasm -f elf64 -g -F dwarf main.nasm
 	ld -m elf_x86_64 main.o $(LIBS_OBJ) -s -o build
 
-only: main.nasm $(LIB)
+64: main.nasm $(LIB)
 	nasm -f elf64 -g -F dwarf main.nasm
 	ld -m elf_x86_64 main.o $(LIBS_OBJ) -s -o build
+32:
+	nasm -f elf main.nasm
+	ld -m elf_i386 -s -o build main.o
+	./build
+bin:
+	nasm loader.nasm -f bin -o loader.bin
+	dd if=loader.bin bs=512 of=fd0
+	qemu-system-x86_64 -vga std fd0
 
 run:
 	./build
 
+#qemu-system-arm -M connex -pflash flash.bin -nographic -serial /dev/null
+#qemu-system-arm
+#dd if=arm.bin of=flash.bin bs=4096 conv=notrunc
+#dd if=/dev/zero of=flas.bin bs=4096 count=4096
+#arm-none-eabi-objcopy -O binary arm.elf arm.bin
+#arm-none-eabi-ld -Ttext=0x0 -o arm.elf arm.o
+#arm-none-eabi-as -o arm.o arm.s

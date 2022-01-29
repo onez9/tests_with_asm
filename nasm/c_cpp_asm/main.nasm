@@ -16,12 +16,15 @@
 	pop rdx
 	
 
+
 %endmacro
 
+;-- s1:
 ;%include "./asmlib/fmt.inc"
 ;%include "./asmlib/sys.inc"
 ;%include "./asmlib/str.inc"
 ;%include "./asmlib/mth.inc"
+%strlen heee "wherwerwer"
 
 extern exit
 extern print_number
@@ -52,10 +55,10 @@ segment .text
 
 _start:
 
-	mov rax, 6
+	;jmp $
 	;call fac1
-	call fac1
 	call print_number
+	jmp $$
 	call exit
 
 
@@ -84,13 +87,10 @@ fac1:
 	dec rax
 	call fac1
 
-
-
 	.qu:
 		pop rbx
 		mul rbx
 		call print_number
-		
 
 		mov rsp, rbp
 		pop rbp
