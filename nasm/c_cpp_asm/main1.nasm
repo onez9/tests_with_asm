@@ -15,6 +15,7 @@
 	pop rdi
 	pop rsi
 	pop rdx
+
 	
 
 
@@ -25,7 +26,7 @@
 ;%include "./asmlib/sys.inc"
 ;%include "./asmlib/str.inc"
 ;%include "./asmlib/mth.inc"
-%strlen heee "wherwerwer"
+%strlen heee "132312lwh3242erwerwer"
 
 extern exit
 extern print_number
@@ -58,8 +59,9 @@ _start:
 
 	;jmp $
 	;call fac1
+	mov rax, heee
 	call print_number
-	jmp $
+	;jmp $
 	call exit
 
 
@@ -80,6 +82,7 @@ fac1:
 	;enter
 	push rbp
 	mov rbp, rsp
+	
 
 	push rax
 	cmp rax, 1

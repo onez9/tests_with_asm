@@ -13,9 +13,9 @@ build: main.nasm $(LIBS_OBJ)
 	nasm -f elf64 -g -F dwarf main.nasm
 	ld -m elf_x86_64 main.o $(LIBS_OBJ) -s -o build
 
-64: main.nasm $(LIB)
-	nasm -f elf64 -g -F dwarf main.nasm
-	ld -m elf_x86_64 main.o $(LIBS_OBJ) -s -o build
+64: main1.nasm $(LIB)
+	nasm -f elf64 -g -F dwarf main1.nasm
+	ld -m elf_x86_64 main1.o $(LIBS_OBJ) -s -o build
 32:
 	nasm -f elf main.nasm
 	ld -m elf_i386 -s -o build main.o

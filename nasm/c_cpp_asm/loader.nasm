@@ -9,6 +9,15 @@ mov bx, 0
 mov ax, $
 push ax
 
+hlt
+hlt
+hlt
+hlt
+hlt
+hlt
+hlt
+hlt
+hlt
 
 MOV SI, HelloString                 ;Store string pointer to SI
 CALL PrintString	                ;Call print string procedure
@@ -58,11 +67,11 @@ MOV AL, [SI]	                    ;Get a byte from string and store in AL registe
 INC SI		                        ;Increment SI pointer
 inc bx
 
-OR AL, AL	                        ;Check if value in AL is zero (end of string)
-JZ exit_function                  ;If end then return
-cmp bx, 8
+;OR AL, AL	                        ;Check if value in AL is zero (end of string)
+;JZ exit_function                  ;If end then return
 
-jne .se3
+;cmp bx, 8
+;jne .se3
 mov al, '0'
 MOV Ah, 0eh	                    ;Tell BIOS that we need to print one charater on screen.
 mov bh, 0x01
