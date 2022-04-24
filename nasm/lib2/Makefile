@@ -6,24 +6,29 @@ LIB = asmlib/sys.o
  
 
 #.PHONY: default compile build run
-default: build run
+default: main run
 compile: $(LIBS)
 	$(CC) asmlib/fmt.nasm && $(CC) asmlib/mth.nasm && $(CC) asmlib/str.nasm && $(CC) asmlib/sys.nasm
-build: main.nasm $(LIBS_OBJ)
+
+main: main.nasm $(LIBS_OBJ)
 	nasm -f elf64 -g -F dwarf main.nasm
 	ld -m elf_x86_64 main.o $(LIBS_OBJ) -s -o build
 
-64: main1.nasm $(LIB)
-	nasm -f elf64 -g -F dwarf main1.nasm
-	ld -m elf_x86_64 main1.o $(LIBS_OBJ) -s -o build
+64: main.nasm $(LIB)
+	nasm -f elf64 -g -F dwarf main.nasm
+	ld -m elf_x86_64 main.o $(LIBS_OBJ) -s -o build
+
 32:
 	nasm -f elf main.nasm
 	ld -m elf_i386 -s -o build main.o
-	./build
+
 bin:
 	nasm loader.nasm -f bin -o loader.bin
 	dd if=loader.bin bs=512 of=fd0
 	qemu-system-x86_64 -vga std fd0
+
+listing: 
+	nasm -f elf64 -g -F dwarf main.nasm -l listing.lst
 
 run:
 	./build

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
-
+#include <vector>
 /*
 Sort(A,p,r)
  if p < r
@@ -43,6 +43,10 @@ size_t* Sort(size_t* A, size_t p, size_t r) {
 	size_t* b;
 	size_t* c;
 	size_t q;
+
+	using namespace std;
+
+	ve
 	if (p < r) {
 		q = std::round((p+r)/2);
 		a = Sort(A, p, q);

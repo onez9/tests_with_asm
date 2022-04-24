@@ -10,12 +10,6 @@
 	popa
 %endmacro
 
-;extern exit
-;extern print_number
-;extern gcd
-;extern fibonacci
-;extern factorial
-
 %include "asmlib/fmt.inc"
 %include "asmlib/sys.inc"
 %include "asmlib/str.inc"
@@ -56,6 +50,11 @@ _start:	                ;tell linker entry point
 	push msg
 	mov eax, fmt
 	call printf
+
+
+	
+
+
 	call exit
 
 

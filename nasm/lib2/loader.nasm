@@ -1,10 +1,10 @@
 [BITS 16]	                      ;Tells the assembler that its a 16 bit code
 [ORG 0x7C00]	                    ;Origin, tell the assembler that where the code will
-																	;be in memory after it is been loaded
 
 ;MOV AH,00h      ; Set video mode
 ;MOV AL,03h      ; Mode 3 (Color text)
 ;INT 10H
+
 mov bx, 0
 mov ax, $
 push ax
@@ -53,6 +53,8 @@ mov bh, 0x01
 ;MOV BH, 00110100b    							;left nibble for background (blue), right nibble for foreground (light gray)
 ;MOV CX, 0000h        							;CH=00(top), CL=00(left)
 ;MOV DX, 9EEEh        							;DH=19(bottom), D=50(right)
+
+
 INT 0x10	                        ;Call video interrupt
 pop bx
 RET		                            ;Return to calling procedure

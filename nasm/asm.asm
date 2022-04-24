@@ -32,12 +32,7 @@ main:
 		mov ecx, msg
 		mov edx, len
 		int 0x80
-
-
 		popa
-
-
-
 
 		inc ecx
 	jmp s1
@@ -52,7 +47,7 @@ main:
 	mov rsi, 1
 	xor rax, rax
 	call printf
-
+	
 	call exit
 
 ;section '.exit' 
