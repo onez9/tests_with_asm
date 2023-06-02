@@ -36,14 +36,14 @@ length_string:
 	push rdx
 	xor rdx, rdx
 	.nex_iter:
-		cmp [rax+rdx], byte 0
+		cmp [rax+rdx], byte 0 ; пока не найдём нуль-терминатор
 		je .close
 		inc rdx
 		jmp .nex_iter
 
 	.close:
 		mov rax, rdx
-		pop rdx
+		pop rdx ; берем из стэка значение которое там было изначально
 		ret
 
 

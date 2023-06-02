@@ -18,7 +18,7 @@ global msg
 global len
 
 section .data
-	msg db 0xa, "--------------------------------------------------", 0xa, 0x0
+	msg db 0xa, "-----------------------------------12312---------------", 0xa, 0x0
 	len equ $ - msg
 	t equ $$
 	msg1 db "hello black", 0xa, 0x0
@@ -47,7 +47,7 @@ _start:
 	call print_number
 	mov rax, t
 	call print_number
-	ilog2e()
+	;#ilog2e()
 
 	call exit
 

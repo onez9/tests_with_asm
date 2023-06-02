@@ -3,6 +3,8 @@ entry _start
 
 ;public _start
 
+
+
 new_line equ 0xa
 msg db "hello, world!", new_line, 0
 len equ $ - msg

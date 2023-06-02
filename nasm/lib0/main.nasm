@@ -1,5 +1,9 @@
 %macro print 2 
-	pusha
+	;pusha
+	push eax
+	push ebx
+	push ecx
+	push edx
 
 	mov eax, 4
 	mov ebx, 1
@@ -7,7 +11,12 @@
 	mov edx, %2
 	int 80h
 	
-	popa
+
+	pop edx
+	pop ecx
+	pop ebx
+	pop eax
+	;popa
 %endmacro
 
 %include "asmlib/fmt.inc"
@@ -18,9 +27,9 @@
 ;export
 
 
-section	.data
-	fmt db "[%s]", 0
-	msg db "hello, world", 0
+section .data
+	fmt db "[%s]", 0x0
+	msg db "hello, world", 0x0
 	len equ $ - msg
 
 	;msg db 'The Sum is:',0xa	
@@ -42,17 +51,22 @@ section .bss
 	_bss_char resb 1
 
 section	.text
-	global _start
-  ;global main					;must be declared for using gcc
+	global _start ;global main					;must be declared for using gcc
+
 
 _start:	                ;tell linker entry point
 
-	push msg
-	mov eax, fmt
-	call printf
+    push msg
+    mov eax, fmt
+    call printf
+    ;jmp $$
 
-
-	
+	;mov [ss1], eax
+	;mov eax, 4
+	;mov ebx, 1
+	;mov ecx, ss1
+	;mov edx, 1
+	;int 0x80
 
 
 	call exit
@@ -73,24 +87,22 @@ section .printf
 
 printf:
 	.next_iter:
-		cmp [eax], byte 0
+		cmp [eax], byte 0 ; проверка не конец ли форматированной строки; если конец то выход
 		je .close
 
 		cmp [eax], byte '%'
 		je .special_char
-
-		.special_char:
-			jmp .next_step
-
 		.default_char:
 			push eax
 			mov eax, [eax]
-
-			print msg, len
+			;print msg, len
+            call print_char
 			pop eax
 			jmp .next_step
+		.special_char:
+			jmp .next_step ; прыгай на следующий символ
 		.next_step:
-			inc eax
+			inc eax ; делай один сдвиг влево
 			jmp .next_iter
 	.close:
 		ret
@@ -101,7 +113,6 @@ print_char:
 	push ecx
 	push edx
 
-	
 	mov [ss1], eax
 	mov eax, 4
 	mov ebx, 1
@@ -113,8 +124,8 @@ print_char:
 	pop ecx
 	pop edx
 	ret
-
-
+;
+;
 
 
 
