@@ -2,8 +2,8 @@ format ELF64
 
 public exit
 
-;section exit readable
 ;absolute .exit
+section '.exit' executable
 exit:
 	mov rax, 60
 	xor rdi, rdi

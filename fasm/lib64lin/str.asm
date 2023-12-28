@@ -48,13 +48,11 @@ string2number:
 		ret
 
 
-
-section '.number2string' executable
 ; | input
 ; rax = number
 ; rbx = buffer
 ; rcx = buffer size
-
+section '.number2string' executable
 number2string:
 	; save these registers into stack (push)
 	push rax

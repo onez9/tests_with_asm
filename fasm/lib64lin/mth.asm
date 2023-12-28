@@ -5,11 +5,10 @@ public factorial		;global factorial ;for nasm also
 public fibonacci		;global fibonacci
 public gcd					;public gcd
 
-
-section '.factorial' executable
 ; rax = input
 ; output 
 ; rax = output
+section '.factorial' executable
 factorial:
 	push rdx
 	push rbx
@@ -26,12 +25,13 @@ factorial:
 		pop rdx
 		ret
 
-;section .fibonacci
-fibonacci:
+
 ; input
 ; rax = number
 ; output 
 ; rax = number
+section '.fibonacci' executable
+fibonacci:
 	push rbx
 	push rcx
 
