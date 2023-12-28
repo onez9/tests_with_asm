@@ -2,55 +2,19 @@ format ELF64
 public _start
 
 
+section '.data' writeable
+	msg db 'Hello world!', 0xa, 0
+	msglen=$-msg
 
-section '.data' writable
-new_line equ 0xa
-msg db "hello, world", new_line, 0
-len equ $ - msg
+include 'lib64lin/fmt.inc'
+include 'lib64lin/mth.inc'
+include 'lib64lin/str.inc'
+include 'lib64lin/sys.inc'
 
+section '.text' executable
 _start:
-	mov rax, msg
+	mov rcx, msg
+	mov rdx, msglen
 	call print_string
+
 	call exit
-
-print_string:
-	push rax
-	push rbx
-	push rcx
-	push rdx
-
-	mov rcx, rax
-	call length_string
-	mov rdx, rax
-	mov rax, 4
-	mov rbx, 1
-	int 0x80
-
-	pop rdx
-	pop rcx
-	pop rbx
-	pop rax
-
-	ret ; in order to caller
-
-length_string:
-	push rdx
-	xor rdx, rdx
-	.nex_iter:
-		cmp [rax+rdx], byte 0
-		je .close
-		inc rdx
-		jmp .nex_iter
-
-	.close:
-		mov rax, rdx
-		pop rdx
-		ret
-
-
-	ret
-
-exit:
-	mov rax, 1
-	mov rbx, 0
-	int 0x80
