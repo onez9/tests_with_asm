@@ -1,2 +1,4 @@
 extrn print_number
 extrn print_string
+extrn input_string
+extrn input_number

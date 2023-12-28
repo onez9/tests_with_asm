@@ -2,8 +2,11 @@ FORMAT ELF64
 ;global print
 public print_number
 public print_string
+public input_string
+public input_number
 ; extern msg
 ; extern len
+include 'str.inc'
 
 section '.print_number' executable
 print_number:
@@ -64,14 +67,66 @@ print_number:
 
 section '.print_string' executable
 print_string:
-	push rbx
 	push rax
+	push rbx
+	push rcx
+	push rdx
 
+	mov rcx, rax
+	mov rdx, rbx
 	mov rax, 4
 	mov rbx, 1
 	int 0x80
 
-	pop rax
+	pop rdx
+	pop rcx
 	pop rbx
+	pop rax
 
+	ret
+
+
+;rax=buffer
+;rbx=buffer_size
+section '.input_string' executable
+input_string:
+	push rax
+	push rbx
+	push rcx
+	push rdx
+
+	push rax
+
+	mov rcx, rax
+	mov rdx, rbx
+	mov rax, 3 ; read
+	mov rbx, 2 ; стандартный потоко ввода
+	int 0x80
+
+	pop rbx 
+	; mov [rbx+rax-1], byte 0
+	mov [rbx+rax-1], byte 0xa
+
+
+	pop rdx
+	pop rcx
+	pop rbx
+	pop rax
+	ret
+
+
+section '.input_number' executable
+input_number:
+	push rax
+	push rbx
+	push rcx
+	push rdx
+
+	call input_string
+	call string2number
+
+	pop rdx
+	pop rcx
+	pop rbx
+	pop rax
 	ret

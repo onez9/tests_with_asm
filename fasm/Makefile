@@ -14,6 +14,10 @@ build: main.asm $(LIBS_OBJ)
 	ld main.o $(LIBS_OBJ) -o main
 run:
 	rm main.o
+	rm lib64lin/fmt.o
+	rm lib64lin/mth.o
+	rm lib64lin/str.o
+	rm lib64lin/sys.o
 	./main
 
 
