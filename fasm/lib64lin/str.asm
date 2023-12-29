@@ -5,7 +5,8 @@ public string2number
 public number2string
 
 
-
+; rax - string ; input
+; rax - number ; output
 section '.string2number' executable
 string2number:
 

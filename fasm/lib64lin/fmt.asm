@@ -2,11 +2,16 @@ FORMAT ELF64
 ;global print
 public print_number
 public print_string
+public print_char
+public print_line
 public input_string
 public input_number
 ; extern msg
 ; extern len
 include 'str.inc'
+section '.bss' writeable
+	bss_char rb 1
+
 
 section '.print_number' executable
 print_number:
@@ -86,6 +91,43 @@ print_string:
 	ret
 
 
+section '.print_char' executable
+print_char:
+	; mov rax, 4
+	; mov rbx, 1
+	; mov rcx, 'A'
+	; mov rdx, 1
+	; int 0x80
+	push rax
+	push rbx
+	push rcx
+	push rdx
+
+
+	mov [bss_char], al
+
+	mov rax, 1 ; write
+	mov rdi, 1 ; stdout
+	mov rsi, bss_char
+	mov rdx, 1
+	syscall
+
+	pop rdx
+	pop rcx
+	pop rbx
+	pop rax
+
+	ret
+
+section '.print_line' executable
+print_line:
+	push rax
+	mov rax, 0xa
+	call print_char
+	pop rax
+	ret
+
+
 ;rax=buffer
 ;rbx=buffer_size
 section '.input_string' executable
@@ -105,7 +147,7 @@ input_string:
 
 	pop rbx 
 	; mov [rbx+rax-1], byte 0
-	mov [rbx+rax-1], byte 0xa
+	mov [rbx+rax-1], byte 0
 
 
 	pop rdx
@@ -117,7 +159,7 @@ input_string:
 
 section '.input_number' executable
 input_number:
-	push rax
+	; push rax
 	push rbx
 	push rcx
 	push rdx
@@ -128,5 +170,5 @@ input_number:
 	pop rdx
 	pop rcx
 	pop rbx
-	pop rax
+	; pop rax
 	ret

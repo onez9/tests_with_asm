@@ -1,0 +1,267 @@
+
+main:     формат файла elf64-x86-64
+
+
+Дизассемблирование раздела .text:
+
+0000000000401000 <_start>:
+  401000:	48 b8 00 20 40 00 00 	movabs rax,0x402000
+  401007:	00 00 00 
+  40100a:	48 c7 c3 1c 00 00 00 	mov    rbx,0x1c
+  401011:	e8 82 00 00 00       	call   401098 <print_string>
+  401016:	48 b8 30 20 40 00 00 	movabs rax,0x402030
+  40101d:	00 00 00 
+  401020:	48 c7 c3 15 00 00 00 	mov    rbx,0x15
+  401027:	e8 e4 00 00 00       	call   401110 <input_number>
+  40102c:	e8 07 00 00 00       	call   401038 <print_number>
+  401031:	e8 02 02 00 00       	call   401238 <exit>
+
+Дизассемблирование раздела .print_number:
+
+0000000000401038 <print_number>:
+  401038:	50                   	push   rax
+  401039:	53                   	push   rbx
+  40103a:	51                   	push   rcx
+  40103b:	52                   	push   rdx
+  40103c:	48 31 c9             	xor    rcx,rcx
+  40103f:	48 c7 c3 0a 00 00 00 	mov    rbx,0xa
+  401046:	48 31 d2             	xor    rdx,rdx
+  401049:	48 f7 f3             	div    rbx
+  40104c:	48 83 c2 30          	add    rdx,0x30
+  401050:	52                   	push   rdx
+  401051:	48 ff c1             	inc    rcx
+  401054:	48 83 f8 00          	cmp    rax,0x0
+  401058:	74 02                	je     40105c <print_number+0x24>
+  40105a:	eb e3                	jmp    40103f <print_number+0x7>
+  40105c:	48 83 f9 00          	cmp    rcx,0x0
+  401060:	74 2d                	je     40108f <print_number+0x57>
+  401062:	51                   	push   rcx
+  401063:	57                   	push   rdi
+  401064:	56                   	push   rsi
+  401065:	52                   	push   rdx
+  401066:	48 c7 c0 01 00 00 00 	mov    rax,0x1
+  40106d:	48 c7 c7 01 00 00 00 	mov    rdi,0x1
+  401074:	48 8d 74 24 20       	lea    rsi,[rsp+0x20]
+  401079:	48 c7 c2 08 00 00 00 	mov    rdx,0x8
+  401080:	0f 05                	syscall
+  401082:	5a                   	pop    rdx
+  401083:	5e                   	pop    rsi
+  401084:	5f                   	pop    rdi
+  401085:	59                   	pop    rcx
+  401086:	48 83 c4 08          	add    rsp,0x8
+  40108a:	48 ff c9             	dec    rcx
+  40108d:	eb cd                	jmp    40105c <print_number+0x24>
+  40108f:	5a                   	pop    rdx
+  401090:	59                   	pop    rcx
+  401091:	5b                   	pop    rbx
+  401092:	58                   	pop    rax
+  401093:	c3                   	ret
+
+Дизассемблирование раздела .print_string:
+
+0000000000401098 <print_string>:
+  401098:	50                   	push   rax
+  401099:	53                   	push   rbx
+  40109a:	51                   	push   rcx
+  40109b:	52                   	push   rdx
+  40109c:	48 89 c1             	mov    rcx,rax
+  40109f:	48 89 da             	mov    rdx,rbx
+  4010a2:	48 c7 c0 04 00 00 00 	mov    rax,0x4
+  4010a9:	48 c7 c3 01 00 00 00 	mov    rbx,0x1
+  4010b0:	cd 80                	int    0x80
+  4010b2:	5a                   	pop    rdx
+  4010b3:	59                   	pop    rcx
+  4010b4:	5b                   	pop    rbx
+  4010b5:	58                   	pop    rax
+  4010b6:	c3                   	ret
+
+Дизассемблирование раздела .print_char:
+
+00000000004010b8 <print_char>:
+  4010b8:	50                   	push   rax
+  4010b9:	53                   	push   rbx
+  4010ba:	51                   	push   rcx
+  4010bb:	52                   	push   rdx
+  4010bc:	88 05 8e 0f 00 00    	mov    BYTE PTR [rip+0xf8e],al        # 402050 <__bss_start+0xb>
+  4010c2:	48 c7 c0 04 00 00 00 	mov    rax,0x4
+  4010c9:	48 c7 c7 01 00 00 00 	mov    rdi,0x1
+  4010d0:	48 be 50 20 40 00 00 	movabs rsi,0x402050
+  4010d7:	00 00 00 
+  4010da:	48 c7 c2 01 00 00 00 	mov    rdx,0x1
+  4010e1:	0f 05                	syscall
+  4010e3:	5a                   	pop    rdx
+  4010e4:	59                   	pop    rcx
+  4010e5:	5b                   	pop    rbx
+  4010e6:	58                   	pop    rax
+  4010e7:	c3                   	ret
+
+Дизассемблирование раздела .input_string:
+
+00000000004010e8 <input_string>:
+  4010e8:	50                   	push   rax
+  4010e9:	53                   	push   rbx
+  4010ea:	51                   	push   rcx
+  4010eb:	52                   	push   rdx
+  4010ec:	50                   	push   rax
+  4010ed:	48 89 c1             	mov    rcx,rax
+  4010f0:	48 89 da             	mov    rdx,rbx
+  4010f3:	48 c7 c0 03 00 00 00 	mov    rax,0x3
+  4010fa:	48 c7 c3 02 00 00 00 	mov    rbx,0x2
+  401101:	cd 80                	int    0x80
+  401103:	5b                   	pop    rbx
+  401104:	c6 44 03 ff 00       	mov    BYTE PTR [rbx+rax*1-0x1],0x0
+  401109:	5a                   	pop    rdx
+  40110a:	59                   	pop    rcx
+  40110b:	5b                   	pop    rbx
+  40110c:	58                   	pop    rax
+  40110d:	c3                   	ret
+
+Дизассемблирование раздела .input_number:
+
+0000000000401110 <input_number>:
+  401110:	53                   	push   rbx
+  401111:	51                   	push   rcx
+  401112:	52                   	push   rdx
+  401113:	e8 d0 ff ff ff       	call   4010e8 <input_string>
+  401118:	e8 7b 00 00 00       	call   401198 <string2number>
+  40111d:	5a                   	pop    rdx
+  40111e:	59                   	pop    rcx
+  40111f:	5b                   	pop    rbx
+  401120:	c3                   	ret
+
+Дизассемблирование раздела .factorial:
+
+0000000000401128 <factorial>:
+  401128:	52                   	push   rdx
+  401129:	53                   	push   rbx
+  40112a:	48 89 c3             	mov    rbx,rax
+  40112d:	48 c7 c0 01 00 00 00 	mov    rax,0x1
+  401134:	48 83 fb 01          	cmp    rbx,0x1
+  401138:	7e 08                	jle    401142 <factorial+0x1a>
+  40113a:	48 f7 e3             	mul    rbx
+  40113d:	48 ff cb             	dec    rbx
+  401140:	eb f2                	jmp    401134 <factorial+0xc>
+  401142:	5b                   	pop    rbx
+  401143:	5a                   	pop    rdx
+  401144:	c3                   	ret
+
+Дизассемблирование раздела .fibonacci:
+
+0000000000401148 <fibonacci>:
+  401148:	53                   	push   rbx
+  401149:	51                   	push   rcx
+  40114a:	48 89 c1             	mov    rcx,rax
+  40114d:	48 c7 c0 00 00 00 00 	mov    rax,0x0
+  401154:	48 c7 c3 01 00 00 00 	mov    rbx,0x1
+  40115b:	48 83 f9 00          	cmp    rcx,0x0
+  40115f:	74 13                	je     401174 <fibonacci+0x2c>
+  401161:	48 83 f9 01          	cmp    rcx,0x1
+  401165:	7e 10                	jle    401177 <fibonacci+0x2f>
+  401167:	53                   	push   rbx
+  401168:	48 01 d8             	add    rax,rbx
+  40116b:	48 89 c3             	mov    rbx,rax
+  40116e:	58                   	pop    rax
+  40116f:	48 ff c9             	dec    rcx
+  401172:	eb ed                	jmp    401161 <fibonacci+0x19>
+  401174:	48 31 db             	xor    rbx,rbx
+  401177:	48 89 d8             	mov    rax,rbx
+  40117a:	59                   	pop    rcx
+  40117b:	5b                   	pop    rbx
+  40117c:	c3                   	ret
+
+Дизассемблирование раздела .gcd:
+
+0000000000401180 <gcd>:
+  401180:	53                   	push   rbx
+  401181:	48 83 fb 00          	cmp    rbx,0x0
+  401185:	74 0d                	je     401194 <gcd+0x14>
+  401187:	48 31 d2             	xor    rdx,rdx
+  40118a:	48 f7 f3             	div    rbx
+  40118d:	53                   	push   rbx
+  40118e:	48 89 d3             	mov    rbx,rdx
+  401191:	58                   	pop    rax
+  401192:	eb ed                	jmp    401181 <gcd+0x1>
+  401194:	5b                   	pop    rbx
+  401195:	c3                   	ret
+
+Дизассемблирование раздела .string2number:
+
+0000000000401198 <string2number>:
+  401198:	53                   	push   rbx
+  401199:	51                   	push   rcx
+  40119a:	52                   	push   rdx
+  40119b:	48 31 db             	xor    rbx,rbx
+  40119e:	48 31 c9             	xor    rcx,rcx
+  4011a1:	80 3c 18 00          	cmp    BYTE PTR [rax+rbx*1],0x0
+  4011a5:	74 0c                	je     4011b3 <string2number+0x1b>
+  4011a7:	8a 0c 18             	mov    cl,BYTE PTR [rax+rbx*1]
+  4011aa:	80 e9 30             	sub    cl,0x30
+  4011ad:	51                   	push   rcx
+  4011ae:	48 ff c3             	inc    rbx
+  4011b1:	eb ee                	jmp    4011a1 <string2number+0x9>
+  4011b3:	48 c7 c1 01 00 00 00 	mov    rcx,0x1
+  4011ba:	48 31 c0             	xor    rax,rax
+  4011bd:	48 83 fb 00          	cmp    rbx,0x0
+  4011c1:	74 11                	je     4011d4 <string2number+0x3c>
+  4011c3:	5a                   	pop    rdx
+  4011c4:	48 0f af d1          	imul   rdx,rcx
+  4011c8:	48 6b c9 0a          	imul   rcx,rcx,0xa
+  4011cc:	48 01 d0             	add    rax,rdx
+  4011cf:	48 ff cb             	dec    rbx
+  4011d2:	eb e9                	jmp    4011bd <string2number+0x25>
+  4011d4:	5a                   	pop    rdx
+  4011d5:	59                   	pop    rcx
+  4011d6:	5b                   	pop    rbx
+  4011d7:	c3                   	ret
+
+Дизассемблирование раздела .number2string:
+
+00000000004011d8 <number2string>:
+  4011d8:	50                   	push   rax
+  4011d9:	53                   	push   rbx
+  4011da:	51                   	push   rcx
+  4011db:	52                   	push   rdx
+  4011dc:	56                   	push   rsi
+  4011dd:	48 89 ce             	mov    rsi,rcx
+  4011e0:	48 31 c9             	xor    rcx,rcx
+  4011e3:	53                   	push   rbx
+  4011e4:	48 c7 c3 0a 00 00 00 	mov    rbx,0xa
+  4011eb:	48 31 d2             	xor    rdx,rdx
+  4011ee:	48 f7 f3             	div    rbx
+  4011f1:	5b                   	pop    rbx
+  4011f2:	48 83 c2 30          	add    rdx,0x30
+  4011f6:	52                   	push   rdx
+  4011f7:	48 ff c1             	inc    rcx
+  4011fa:	48 83 f8 00          	cmp    rax,0x0
+  4011fe:	74 02                	je     401202 <number2string+0x2a>
+  401200:	eb e1                	jmp    4011e3 <number2string+0xb>
+  401202:	48 89 ca             	mov    rdx,rcx
+  401205:	48 31 c9             	xor    rcx,rcx
+  401208:	48 39 f1             	cmp    rcx,rsi
+  40120b:	74 0e                	je     40121b <number2string+0x43>
+  40120d:	48 39 d1             	cmp    rcx,rdx
+  401210:	74 14                	je     401226 <number2string+0x4e>
+  401212:	58                   	pop    rax
+  401213:	89 04 0b             	mov    DWORD PTR [rbx+rcx*1],eax
+  401216:	48 ff c1             	inc    rcx
+  401219:	eb ed                	jmp    401208 <number2string+0x30>
+  40121b:	48 39 d1             	cmp    rcx,rdx
+  40121e:	74 09                	je     401229 <number2string+0x51>
+  401220:	58                   	pop    rax
+  401221:	48 ff c1             	inc    rcx
+  401224:	eb f5                	jmp    40121b <number2string+0x43>
+  401226:	48 89 d6             	mov    rsi,rdx
+  401229:	c6 04 33 00          	mov    BYTE PTR [rbx+rsi*1],0x0
+  40122d:	5e                   	pop    rsi
+  40122e:	5a                   	pop    rdx
+  40122f:	59                   	pop    rcx
+  401230:	5b                   	pop    rbx
+  401231:	58                   	pop    rax
+  401232:	c3                   	ret
+
+Дизассемблирование раздела .exit:
+
+0000000000401238 <exit>:
+  401238:	48 c7 c0 3c 00 00 00 	mov    rax,0x3c
+  40123f:	48 31 ff             	xor    rdi,rdi
+  401242:	0f 05                	syscall

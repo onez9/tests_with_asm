@@ -19,6 +19,9 @@ run:
 	rm lib64lin/str.o
 	rm lib64lin/sys.o
 	./main
+dump: main
+	objdump -S -M intel -d main > obj.dump
+	cat obj.dump
 
 
 #qemu-system-arm -M connex -pflash flash.bin -nographic -serial /dev/null
